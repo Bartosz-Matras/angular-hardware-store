@@ -1,45 +1,24 @@
-<div class="page-wrapper">
-
-  <!-- MENU SIDEBAR -->
-  <aside class="menu-sidebar d-none d-lg-block">
+<header class="header">
     <div class="logo">
-      <i class="fa-solid fa-screwdriver fa-2xl"></i>
-      <a>Train</a>
-      <!-- <img src="assets/images/logo.png" alt="Train" class="img-responsive"> -->
+      <a class="router-link" routerLink="/products">
+        <i class="fa-solid fa-screwdriver fa-2xl"></i>
+        <a>Train</a>
+      </a>
     </div>
 
-    <app-product-category></app-product-category>
-  </aside>
-  <!-- END MENU SIDEBAR -->
-
-  <div class="page-container">
-    <!-- HEADER DEKSTOP -->
-
-    <!-- END HEDER DESKTOP-->
-
-    <div class="main-content">
-        <h3>Test</h3>
-        <h3>Test</h3>
-        <h3>Test</h3>
-        <h3>Test</h3>
-        <h3>Test</h3>
-        <h3>Test</h3>
-        <h3>Test</h3>
-        <h3>Test</h3>
-        <h3>Test</h3>
-        <h3>Test</h3>
-        <h3>Test</h3>
-        <h3>Test</h3>
-        <h3>Test</h3>
-        <h3>Test</h3>
-        <h3>Test</h3>
-        <h3>Test</h3>
-        <h3>Test</h3>
-        
+    <div class="div-media">
+      <button class="button-media">
+        <i class="fa-solid fa-bars fa-xl"></i>
+      </button>
     </div>
-  </div>
 
-</div>
+    <app-search></app-search>
+
+</header>
+
+
+<router-outlet></router-outlet>
+
 
 
 <!-- FOOTER -->
@@ -49,6 +28,6 @@
     <li><a href="#">Kontakt</a></li>
     <li><a href="#">Pomoc</a></li>
   </ul>
-  <h3>© 2022 Train. Wszystkie prawa zastrzeżone</h3>
+  <h3>© 2022 Train. Wszystkie prawa zastrzeżone.</h3>
 </footer>
 <!-- END FOOTER -->

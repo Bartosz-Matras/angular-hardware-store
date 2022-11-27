@@ -1,0 +1,10 @@
+<div class="search">
+    <input #myInput type="text"
+                    placeholder="Szukaj produktu..."
+                    class="search-input search-input-size"
+                    (keyup.enter)="doSearch(myInput.value)" />
+
+    <button class="search-btn-submit" (click)="doSearch(myInput.value)">
+        Szukaj
+    </button>                
+</div>

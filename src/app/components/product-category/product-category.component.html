@@ -1,17 +1,93 @@
-<div class="menu-sidebar-content">
-    <nav class="navbar-sidebar">
-        <ul class="list-unstyled navbar-list">
-            <li *ngFor="let tempProductCategory of productCategories">
-                {{ tempProductCategory.categoryName }}
-                
-                <!-- <ul class="test">
-                    <li *ngFor="let tempProductSubCategory of listProductSubCategories(tempProductCategory.id)">
-                        {{ tempProductSubCategory.subCategoryName }}
+<div class="page-wrapper">
+    <div class="menu-sidebar-content">
+        <p>Kategorie:</p>
+        <nav class="navbar-sidebar">
+            <div *ngIf="productCategories.length > 0; then thenBlock; else elseBlock">
+            </div>
+
+            <ng-template #thenBlock>
+                <ul class="list-group list-group-flus">
+                    <li class="list-group-item" *ngFor="let tempProductCategory of productCategories">
+                        <a routerLink="/category/{{ tempProductCategory.id }}/{{ tempProductCategory.categoryName}}">
+                            {{ tempProductCategory.categoryName }}
+                        </a>
                     </li>
-                </ul> -->
-            </li>
-        </ul>
-    </nav>
-    <!-- {{ listProductSubCategories(1) }} -->
-    <!-- <p>product-category works!</p> -->
+                </ul>
+            </ng-template>
+            <ng-template #elseBlock>
+                <ul class="list-group list-group-flus">
+                    <li class="list-group-item" *ngFor="let tempProductSubCategories of productSubCategories">
+                        <a routerLink="/subCategory/{{ tempProductSubCategories.id }}/{{ tempProductSubCategories.subCategoryName }}" >
+                            {{ tempProductSubCategories.subCategoryName }}
+                        </a>
+                    </li>
+                </ul>
+            </ng-template>
+            
+        </nav>
+    </div>
+    
+    <div class="category-content">
+        <div class="container-fluid">
+            
+            <div *ngIf="productSubCategories.length > 0; then thenBlock2; else elseBlock2;">
+            </div>
+
+            <ng-template #thenBlock2>
+                <div class="category-content-div">
+                    <div class="category-content-info">
+                        <a routerLink="/category">
+                            <p>
+                                KATEGORIE 
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </p> 
+                        </a>
+                        <p>&nbsp; {{ currentCategoryName }}</p>
+                    </div>
+                    <hr>
+                </div>
+            </ng-template>
+
+            <ng-template #elseBlock2>
+                <div class="category-content-div">
+                    <div class="category-content-info">
+                        
+                    </div>
+                    <hr>
+                </div>
+            </ng-template>
+
+            <div class="category-content-products">
+    
+                <div class="row">
+                    
+                    <!-- loop over the collection off products-->
+                    <div *ngFor="let tempProduct of products" class="col-xxl-3 col-xl-4 col-md-6 col-sm-12">
+                        <div class="product-box">
+                            <div class="product-image">
+                                <a routerLink="/products/{{ tempProduct.id }}">
+                                    <img src="{{ tempProduct.imageUrl }}" >
+                                </a>
+                                <!-- class="img-responsive" -->
+                            </div>
+                            <div class="product-name text-center">
+                                <a routerLink="/products/{{ tempProduct.id }}">
+                                    <p> {{ tempProduct.name }} </p>                           
+                                </a>
+                            </div>           
+                            <div class="price text-center">{{ tempProduct.unitPrice  }} PLN</div>   
+                            <button class="btn btn-success btn-sm btn-size">Dodaj do koszyka</button>              
+                        </div>
+                    </div>
+                    
+                    <!-- if products empty then display a message -->
+                    <div *ngIf="products?.length == 0" class="alert alert-warning col-md-12">
+                        Nie znaleziono produktów
+                    </div>
+                </div>
+    
+            </div>
+        </div>
+        
+    </div>
 </div>
