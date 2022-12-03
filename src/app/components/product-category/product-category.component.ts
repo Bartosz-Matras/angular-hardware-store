@@ -22,25 +22,20 @@ export class ProductCategoryComponent implements OnInit {
   currentCategoryName: string = "";
 
   searchMode: boolean = false;
-  thePageNumber: number = 1;
-  thePageSize: number = 10;
-  theTotalElements: number = 0;
-  previousKeyWord: string = "";
-
-  productCategory?: ProductCategory;
 
   constructor(private productService: ProductService,
               private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.listProducts();
+    this.route.paramMap.subscribe(() => {
+      this.listProducts();
+    });
   }
 
 
   listProducts() {
-
     this.searchMode = this.route.snapshot.paramMap.has('keyword');
-    
+
     if(this.searchMode){
       this.handleSearchProducts();
     }else{
@@ -51,20 +46,9 @@ export class ProductCategoryComponent implements OnInit {
   handleSearchProducts() {
 
     const theKeyWord = this.route.snapshot.paramMap.get('keyword')!;
-    
-    if(this.previousKeyWord != theKeyWord){
-      this.thePageNumber = 1;
-    }
-
-    this.previousKeyWord = theKeyWord;
-
-    console.log(`keyword=${theKeyWord}, thePageNumber=${this.thePageNumber}`)
-
-    // // now search for the products using keyword
-    // this.productService.searchProductsPaginate(this.thePageNumber - 1,
-    //                                             this.thePageSize,
-    //                                             theKeyWord).subscribe(this.processResult())
-
+    console.log(theKeyWord)
+    this.searchProducts(theKeyWord);
+    this.listProductCategories();
   }
 
   handleListProducts(): void {
@@ -80,41 +64,18 @@ export class ProductCategoryComponent implements OnInit {
       this.currentCategoryName = 'NOŻE i OSTRZA';
       this.listProductCategories();
       this.listAllProducts();
-    }
-
-    if(this.previousCategoryId != this.currentCategoryId){
-      this.thePageNumber = 1;
-    }
-
-    this.previousCategoryId = this.currentCategoryId;
-    console.log(`currentCategoryId=${this.currentCategoryId}, thePageNumber=${this.thePageNumber}`)
-    // this.productService.getProductListPaginate(this.thePageNumber - 1,
-    //                                             this.thePageSize,
-    //                                             this.currentCategoryId).subscribe(this.processResult());
+    }                                      
   }
 
-  updatePageSize(pageSize: string) {
-    this.thePageSize = +pageSize;
-    this.thePageNumber = 1;
-    this.listProducts();
-  }
-
-  processResult(){
-    return (data: any) => {
-      this.products = data._embedded.products;
-      this.thePageNumber = data.page.number + 1;
-      this.thePageSize = data.page.size;
-      this.theTotalElements = data.page.totalElements;
-    }
-  }
-
-  listProductCategories() {
-    this.productService.getProductCategories().subscribe(
+  
+  searchProducts(theKeyWord: string) {
+    this.productService.searchProducts(theKeyWord).subscribe(
       data => {
-        this.productCategories = data;
+        this.products = data;
       }
     );
   }
+
 
   listProductsSubCategories() {
     this.productService.getProductSubCategories(this.currentCategoryId).subscribe(
@@ -128,6 +89,16 @@ export class ProductCategoryComponent implements OnInit {
     this.productService.getProductList(id).subscribe(
       data => {
         this.products = data;
+      }
+    );
+  }
+
+
+
+  listProductCategories() {
+    this.productService.getProductCategories().subscribe(
+      data => {
+        this.productCategories = data;
       }
     );
   }

@@ -1,0 +1,146 @@
+<div class="page-wrapper">
+    <div class="menu-sidebar-content">
+        <p>Kategorie:</p>
+        <nav class="navbar-sidebar">
+            <ul class="list-group list-group-flus">
+                <li class="list-group-item" *ngFor="let tempProductCategory of productCategories">
+                    <a routerLink="/category/{{ tempProductCategory.id }}/{{ tempProductCategory.categoryName}}">
+                        {{ tempProductCategory.categoryName }}
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    
+    <div class="product-content">
+        
+        <div *ngIf="product === undefined; then productThen; else productElse">
+        </div>
+
+        <ng-template #productThen>
+            <div class="alert alert-warning col-md-12">
+                Nie znaleziono produktu
+            </div>
+
+            <div class="category-back">
+                <div class="category-back-div" routerLink="/category">
+                    <p>Wróc na stronę głowną</p>
+                </div>
+            </div>
+        </ng-template>
+
+
+        <ng-template #productElse>
+            <div class="product-content-main">
+                <div class="product-content-head">
+                    <div class="product-head-image" >
+                        <img src="{{ product?.imageUrl}}" class="img-fluid" />
+                    </div>
+                    <div class="product-head">
+                        <div class="product-head-info">
+                            <h2>{{ product?.name }} </h2>
+                            <p>Nr katalogowy: {{product?.sku}}</p>
+                        </div>
+                        <div class="product-head-price">
+                            <div class="product-price-info">
+                                <hr>
+                                <p>Dostępne: {{product?.unitsInStock }} szt.</p>
+                                <hr>
+                                <p>Dostawa: 0 PLN</p>
+                                <hr>
+                                <p>Wysyłka: <i class="fa-regular fa-clock"></i> Poniedziałek</p>
+                            </div>
+                            <div class="product-price">
+                                <h2>{{product?.unitPrice }} PLN</h2>
+                                <p>Cena brutto / 1 szt.</p>
+                                <a routerLink="/cart-details">
+                                    <i class="fa fa-shopping-cart fa-xl" aria-hidden="true"></i>
+                                    <p>Dodaj do koszyka</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+
+                <div class="product-also-bought">
+
+                </div>
+
+                <hr>
+                <div class="product-details">
+                    <h1>Dane techniczne: </h1>
+                   
+                    <ul>
+                        <li *ngIf="productDetails?.data1 != null">
+                            {{productDetails?.data1}}
+                        </li>
+                        <li *ngIf="productDetails?.data2 != null">
+                            {{productDetails?.data2}}
+                        </li>
+                        <li *ngIf="productDetails?.data3 != null">
+                            {{productDetails?.data3}}
+                        </li>
+                        <li *ngIf="productDetails?.data4 != null">
+                            {{productDetails?.data4}}
+                        </li>
+                        <li *ngIf="productDetails?.data5 != null">
+                            {{productDetails?.data5}}
+                        </li>
+                        <li *ngIf="productDetails?.data6 != null">
+                            {{productDetails?.data6}}
+                        </li>
+                        <li *ngIf="productDetails?.data7 != null">
+                            {{productDetails?.data7}}
+                        </li>
+                        <li *ngIf="productDetails?.data8 != null">
+                            {{productDetails?.data8}}
+                        </li>
+                        <li *ngIf="productDetails?.data9 != null">
+                            {{productDetails?.data9}}
+                        </li>
+                        <li *ngIf="productDetails?.data10 != null">
+                            {{productDetails?.data10}}
+                        </li>
+                        <li *ngIf="productDetails?.data11 != null">
+                            {{productDetails?.data11}}
+                        </li>
+                        <li *ngIf="productDetails?.data12 != null">
+                            {{productDetails?.data12}}
+                        </li>
+                        <li *ngIf="productDetails?.data13 != null">
+                            {{productDetails?.data13}}
+                        </li>
+                        <li *ngIf="productDetails?.data14 != null">
+                            {{productDetails?.data14}}
+                        </li>
+                        <li *ngIf="productDetails?.data15 != null">
+                            {{productDetails?.data15}}
+                        </li>
+                        <li *ngIf="productDetails?.data16 != null">
+                            {{productDetails?.data16}}
+                        </li>
+                        <li *ngIf="productDetails?.data17 != null">
+                            {{productDetails?.data17}}
+                        </li>
+                        <li *ngIf="productDetails?.data18 != null">
+                            {{productDetails?.data18}}
+                        </li>
+                        <li *ngIf="productDetails?.data19 != null">
+                            {{productDetails?.data19}}
+                        </li>
+                        <li *ngIf="productDetails?.data20 != null">
+                            {{productDetails?.data20}}
+                        </li>
+                    </ul>
+                </div>
+
+                <hr>
+                <div class="product-also-watched">
+
+                </div>
+
+            </div>
+        </ng-template>
+    </div>
+</div>

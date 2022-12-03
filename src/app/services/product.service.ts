@@ -4,6 +4,7 @@ import { map } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
 import { Product } from '../common/product';
 import { ProductCategory } from '../common/product-category';
+import { ProductDetails } from '../common/product-details';
 import { ProductSubCategory } from '../common/product-sub-category';
 
 @Injectable({
@@ -14,6 +15,7 @@ export class ProductService {
   private categoryUrl = 'http://localhost:8080/api/productsCategory';
   private subCategoryUrl = 'http://localhost:8080/api/productsSubCategory';
   private productUrl = 'http://localhost:8080/api/products';
+  private productDetailsUrl = 'http://localhost:8080/api/productsDetails';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -34,6 +36,18 @@ export class ProductService {
       map(response => response._embedded.productsSubCategory)
     );
   }
+
+
+
+  searchProducts(theKeyWord: string): Observable<Product[]> {
+ 
+    // need to build URL based on keyword
+    const searchUrl = `${this.productUrl}/search/findByNameContaining?name=${theKeyWord}`;
+    console.log(searchUrl);
+    return this.getProducts(searchUrl);
+  }
+
+
 
   getProductList(id: number): Observable<Product[]> {
     if(id === -1){
@@ -56,11 +70,31 @@ export class ProductService {
       map(response => response._embedded.products)
     );
   }
+
+
+
+  getProduct(id: string): Observable<Product> {
+    const url = `${this.productUrl}/search/findProductById?id=${id}`;
+    return this.httpClient.get<Product>(url);
+  }
+
+  getProductDetails(id: string) : Observable<ProductDetails> {
+    const url = `${this.productDetailsUrl}/search/findProductDetailsByProductId?id=${id}`;
+    return this.httpClient.get<ProductDetails>(url);
+  }
+
+
 }
 
 interface GetResponseProducts {
   _embedded: {
     products: Product[];
+  },
+  page: {
+    size: number,
+    totalElements: number,
+    totalPages: number,
+    number: number
   }
 }
 
@@ -75,3 +109,4 @@ interface GetResponseProductsSubCategory {
     productsSubCategory: ProductSubCategory[];
   }
 }
+
