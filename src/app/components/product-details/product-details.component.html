@@ -79,7 +79,10 @@
                     </div>
                 </div>
 
-                <hr>
+                <div *ngIf="scrappedProductPageOne?.id != -1 || scrappedProductPageTwo?.id != -1">
+                    <hr>
+                </div>
+
 
                 <div class="product-other-sites">
                     <div *ngIf="scrappedProductPageOne?.id != -1 || scrappedProductPageTwo?.id != -1">

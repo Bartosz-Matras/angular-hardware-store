@@ -17,7 +17,7 @@
             <ng-template #elseBlock>
                 <ul class="list-group list-group-flus">
                     <li class="list-group-item" *ngFor="let tempProductSubCategories of productSubCategories">
-                        <a routerLink="/subCategory/{{ tempProductSubCategories.id }}/{{ tempProductSubCategories.subCategoryName }}" >
+                        <a routerLink="/subCategory/{{currentCategoryId}}/{{currentCategoryName}}/{{ tempProductSubCategories.id }}/{{ tempProductSubCategories.subCategoryName }}" >
                             {{ tempProductSubCategories.subCategoryName }}
                         </a>
                     </li>

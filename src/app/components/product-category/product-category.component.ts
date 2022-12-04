@@ -44,30 +44,11 @@ export class ProductCategoryComponent implements OnInit {
   }
 
   handleSearchProducts() {
-
     const theKeyWord = this.route.snapshot.paramMap.get('keyword')!;
-    console.log(theKeyWord)
     this.searchProducts(theKeyWord);
     this.listProductCategories();
   }
 
-  handleListProducts(): void {
-    const hasCategoryId: boolean = this.route.snapshot.paramMap.has('id');
-
-    if(hasCategoryId) {
-      this.currentCategoryId = +this.route.snapshot.paramMap.get('id')!;
-      this.currentCategoryName = this.route.snapshot.paramMap.get('name')!;
-      this.listProductsSubCategories();
-      this.listProductsBySubCategoryId(this.currentCategoryId);
-    }else {
-      this.currentCategoryId = 1;
-      this.currentCategoryName = 'NOŻE i OSTRZA';
-      this.listProductCategories();
-      this.listAllProducts();
-    }                                      
-  }
-
-  
   searchProducts(theKeyWord: string) {
     this.productService.searchProducts(theKeyWord).subscribe(
       data => {
@@ -77,23 +58,46 @@ export class ProductCategoryComponent implements OnInit {
   }
 
 
+  
+  handleListProducts(): void {
+    const hasCategoryId: boolean = this.route.snapshot.paramMap.has('id');
+
+    if(hasCategoryId) {
+      this.currentCategoryId = +this.route.snapshot.paramMap.get('id')!;
+      this.currentCategoryName = this.route.snapshot.paramMap.get('name')!;
+      this.listProductsSubCategories();
+      // this.listProductsBySubCategoryId(this.currentCategoryId);
+    }else {
+      this.currentCategoryId = 1;
+      this.currentCategoryName = 'NOŻE i OSTRZA';
+      this.listProductCategories();
+      this.listAllProducts();
+    }                                      
+  }
+
   listProductsSubCategories() {
     this.productService.getProductSubCategories(this.currentCategoryId).subscribe(
       data => {
         this.productSubCategories = data;
+        var indexes = this.getIds(data);
+        this.productService.getProductsSubCategories(indexes.toString()).subscribe(
+          data => {
+            this.products = data;
+          }
+        );
       }
     );
   }
 
-  listProductsBySubCategoryId(id: number) {
-    this.productService.getProductList(id).subscribe(
-      data => {
-        this.products = data;
-      }
-    );
+  getIds(data: ProductSubCategory[]){
+    var indexes = new Array<Number>;
+  
+    for (var element of data){
+      indexes.push(element.id);
+    }
+
+    return indexes;
   }
-
-
 
   listProductCategories() {
     this.productService.getProductCategories().subscribe(
@@ -104,7 +108,7 @@ export class ProductCategoryComponent implements OnInit {
   }
 
   listAllProducts() {
-    this.productService.getProductList(-1).subscribe(
+    this.productService.getProductList().subscribe(
       data => {
         this.products = data;
       }

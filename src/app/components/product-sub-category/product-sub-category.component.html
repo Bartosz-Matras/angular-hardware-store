@@ -1,1 +1,59 @@
-<p>product-sub-category works!</p>
+<div class="page-wrapper">
+   
+    <div class="sub-category-content">
+
+        <div class="container-fluid">
+            <div class="subcategory-content-div">
+                <div class="subcategory-content-info">
+                    <a routerLink="/category">
+                        <p>
+                            KATEGORIE 
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </p> 
+                    </a>
+                    <a routerLink="/category/{{currentCategoryId}}/{{currentCategoryName}}">
+                        <p>
+                            &nbsp;
+                            {{ currentCategoryName }} 
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </p> 
+                    </a>
+                    <p>&nbsp; {{ currentSubCategoryName }}</p>
+                </div>
+                <hr>
+            </div>
+
+            <div class="subcategory-content-products">
+                <div class="row">
+                    <!-- loop over the collection off products-->
+                    <div *ngFor="let tempProduct of products" class="col-xxl-3 col-xl-4 col-md-6 col-sm-12">
+                        <div class="product-box">
+                            <div class="product-image">
+                                <a routerLink="/products/{{ tempProduct.id }}">
+                                    <img src="{{ tempProduct.imageUrl }}" >
+                                </a>
+                                <!-- class="img-responsive" -->
+                            </div>
+                            <div class="product-name text-center">
+                                <a routerLink="/products/{{ tempProduct.id }}">
+                                    <p> {{ tempProduct.name }} </p>                           
+                                </a>
+                            </div>           
+                            <div class="price text-center">{{ tempProduct.unitPrice  }} PLN</div>   
+                            <button class="btn btn-success btn-sm btn-size">Dodaj do koszyka</button>              
+                        </div>
+                    </div>
+                    
+                    <!-- if products empty then display a message -->
+                    <div *ngIf="products?.length == 0" class="alert alert-warning col-md-12">
+                        Nie znaleziono produktów
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
