@@ -370,7 +370,7 @@ a:active { text-decoration: none; }
     border-radius: 1em;
     width: 76vw;
     height: auto;
-    margin-left: 2vw;
+    margin-left: 1vw;
     margin-top: 2vh;
     background-color: white;
 }
@@ -445,6 +445,7 @@ a:active { text-decoration: none; }
 .product-price h2 {
     padding-top: 5%;
     height: 20%;
+    color: white;
 }
 
 .product-price p {
@@ -476,17 +477,168 @@ a:active { text-decoration: none; }
 }
 
 
+.product-content-main h1 {
+    font-family: Arial, Helvetica, sans-serif;
+    padding-left: 2%;
+}
+
+.product-also-bought {
+    margin-left: 2%;
+    margin-right: 2%;
+    background-color: #16DB65;
+    display: flex;
+    flex-direction: row;
+    border-radius: 2em;
+}
+
+.product-bought {
+    margin: 1%;
+    width: 90%;
+    border-radius: 2em;
+    background-color: white;
+    overflow: hidden;
+}
+
+.product-bought-image {
+    width: 100%;
+    height: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.product-bought-text {
+    width: 100%;
+    height: 20%;
+}
+
+.product-bought-text a p {
+    padding: 5%;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+
+
+.product-also-watched {
+    margin-left: 2%;
+    margin-right: 2%;
+    margin-bottom: 2%;
+    background-color: #16DB65;
+    display: flex;
+    flex-direction: row;
+    border-radius: 2em;
+}
+
+.product-watched {
+    margin: 1%;
+    width: 90%;
+    border-radius: 2em;
+    background-color: white;
+    overflow: hidden;
+}
+
+.product-watched-image {
+    width: 100%;
+    height: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.product-watched-text {
+    width: 100%;
+    height: 20%;
+}
+
+.product-watched-text a p {
+    padding: 5%;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.product-other-sites {
+    width: 96%;
+    margin-left: 2%;
+}
+
+
+.product-one  {
+    margin-bottom: 2%;
+}
+
+.product-one a {
+    border-bottom: 1px solid black;
+    background-color: #16DB65;
+    border-radius: 2em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.product-one a p {
+    padding-left: 2%;
+    padding-right: 2%;
+    font-size: 1.5em;
+    margin: 0;
+    padding-bottom: 1%;
+    padding-top: 1%;
+}
+
+.product-one a #product-one-name {
+    color: black;
+}
+
+.product-one a #product-one-price {
+    color: #FFFFEA;
+}
+
+
+
+.product-two {
+    margin-bottom: 2%;
+}
+
+.product-two a {
+    border-bottom: 1px solid black;
+    background-color: #16DB65;
+    border-radius: 2em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.product-two a p {
+    padding-left: 2%;
+    padding-right: 2%;
+    font-size: 1.5em;
+    margin: 0;
+    padding-bottom: 1%;
+    padding-top: 1%;
+}
+
+.product-two a #product-two-name {
+    color: black;
+}
+
+.product-two a #product-two-price {
+    color: #FFFFEA;
+}
+
+
+
+
+.product-details {
+    font-family: Arial, Helvetica, sans-serif;
+}
 
 /*
-
-.product-head-info {
-    height: 25%;
-}
-
-.product-head-price {
-    height: 60%;
-    width: 100%;
-}
 
 .product-also-bought {
     width: 70vw;
@@ -627,6 +779,14 @@ footer h3 {
         height: auto;
     }
 
+    .product-bought-image {
+        height: 60%;
+    }
+
+    .product-watched-image {
+        height: 60%;
+    }
+
     footer {
         height: 15vh;
     }
@@ -739,6 +899,85 @@ footer h3 {
         padding-bottom: 0;
         padding-top: 4%;
         font-size: 1.5em;
+    }
+
+    .product-also-bought {
+        border-radius: 0;
+        margin-left: 1%;
+        margin-right: 1%;
+        height: 40vh;
+        overflow-x: auto;
+    }
+
+    .product-bought {
+        min-width: 70vw;
+        margin: 3%;
+        border-radius: 1em;
+        overflow: unset;
+    }
+
+    .product-bought-image {
+        overflow: hidden;
+        border-radius: 1em;
+        height: 80%;
+    }
+
+    .product-bought-text {
+        height: 20%;
+    }
+
+    .product-bought-text a {
+        height: 100%;
+        overflow: hidden;
+        font-size: 2em;
+    }
+
+    .product-bought-text a p {
+        font-size: 0.5em;
+    }
+
+
+    .product-also-watched {
+        border-radius: 0;
+        margin-left: 1%;
+        margin-right: 1%;
+        height: 40vh;
+        overflow-x: auto;
+    }
+
+    .product-watched {
+        min-width: 70vw;
+        margin: 3%;
+        border-radius: 1em;
+        overflow: unset;
+    }
+
+    .product-watched-image {
+        overflow: hidden;
+        border-radius: 1em;
+        height: 80%;
+    }
+
+    .product-watched-text {
+        height: 20%;
+    }
+
+    .product-watched-text a {
+        height: 100%;
+        overflow: hidden;
+        font-size: 2em;
+    }
+
+    .product-watched-text a p {
+        font-size: 0.5em;
+    }
+
+    .product-one a p {
+        font-size: 1em;
+    }
+
+    .product-two a p {
+        font-size: 1em;
     }
 
     footer {

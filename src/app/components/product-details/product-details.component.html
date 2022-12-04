@@ -63,8 +63,46 @@
                 </div>
                 <hr>
 
+                <h1>Inni kupowali również</h1>
                 <div class="product-also-bought">
+                    <div *ngFor="let tempProduct of productAlsoBought" class="product-bought">
+                        <div class="product-bought-image">
+                            <a routerLink="/products/{{tempProduct.id}}">
+                                <img src="{{tempProduct.imageUrl}}" class="img-fluid">
+                            </a>
+                        </div>
+                        <div class="product-bought-text">
+                            <a routerLink="/products/{{tempProduct.id}}">
+                                <p> {{tempProduct.name }}</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
 
+                <hr>
+
+                <div class="product-other-sites">
+                    <div *ngIf="scrappedProductPageOne?.id != -1 || scrappedProductPageTwo?.id != -1">
+                        <h1>Cena produktu na innych stronach: </h1>
+                    </div>
+
+                    <div *ngIf="scrappedProductPageOne?.id != -1">
+                        <div class="product-one">
+                            <a href="{{scrappedProductPageOne?.pageUrl}}">
+                                <p id="product-one-name">{{ scrappedProductPageOne?.pageName }}</p>
+                                <p id="product-one-price">Cena: {{scrappedProductPageOne?.unitPrice}} PLN</p>
+                            </a>
+                        </div>
+                    </div>
+                  
+                    <div *ngIf="scrappedProductPageTwo?.id != -1">
+                        <div class="product-two">
+                            <a href="{{scrappedProductPageTwo?.pageUrl}}">
+                                <p id="product-two-name">{{ scrappedProductPageTwo?.pageName }}</p>
+                                <p id="product-two-price">Cena: {{scrappedProductPageTwo?.unitPrice}} PLN</p>
+                            </a>
+                        </div>
+                    </div>
                 </div>
 
                 <hr>
@@ -136,10 +174,22 @@
                 </div>
 
                 <hr>
+                <h1>Inni oglądali również</h1>
                 <div class="product-also-watched">
-
+                    <div *ngFor="let tempProduct of productAlsoWatched" class="product-watched">
+                        <div class="product-watched-image">
+                            <a routerLink="/products/{{tempProduct.id}}">
+                                <img src="{{tempProduct.imageUrl}}" class="img-fluid">
+                            </a>
+                        </div>
+                        <div class="product-watched-text">
+                            <a routerLink="/products/{{tempProduct.id}}">
+                                <p> {{tempProduct.name }}</p>
+                            </a>
+                        </div>
+                    </div>
                 </div>
-
+                <hr>
             </div>
         </ng-template>
     </div>
