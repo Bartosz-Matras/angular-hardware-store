@@ -1,5 +1,4 @@
-export class ProductTwo {
-
+export class ScrapperProduct {
     constructor(public id: number,
         public sku: string,
         public unitPrice: number,

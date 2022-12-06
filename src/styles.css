@@ -622,38 +622,6 @@ a:active { text-decoration: none; }
 
 
 
-.product-two {
-    margin-bottom: 2%;
-}
-
-.product-two a {
-    border-bottom: 1px solid black;
-    background-color: #16DB65;
-    border-radius: 2em;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-.product-two a p {
-    padding-left: 2%;
-    padding-right: 2%;
-    font-size: 1.5em;
-    margin: 0;
-    padding-bottom: 1%;
-    padding-top: 1%;
-}
-
-.product-two a #product-two-name {
-    color: black;
-}
-
-.product-two a #product-two-price {
-    color: #FFFFEA;
-}
-
-
-
 
 .product-details {
     font-family: Arial, Helvetica, sans-serif;
@@ -996,11 +964,7 @@ footer h3 {
     .product-one a p {
         font-size: 1em;
     }
-
-    .product-two a p {
-        font-size: 1em;
-    }
-
+    
     footer {
         height: 10vh;
     }

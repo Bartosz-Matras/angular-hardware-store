@@ -5,8 +5,7 @@ import { ProductAlsoBought } from 'src/app/common/product-also-bought';
 import { ProductAlsoWatched } from 'src/app/common/product-also-watched';
 import { ProductCategory } from 'src/app/common/product-category';
 import { ProductDetails } from 'src/app/common/product-details';
-import { ProductOne } from 'src/app/common/product-one';
-import { ProductTwo } from 'src/app/common/product-two';
+import { ScrapperProduct } from 'src/app/common/scrapper-product';
 import { CorrelationServiceService } from 'src/app/services/correlation-service.service';
 import { ProductService } from 'src/app/services/product.service';
 
@@ -24,8 +23,7 @@ export class ProductDetailsComponent implements OnInit {
 
   productAlsoBought: Product[] | undefined;
   productAlsoWatched: Product[] | undefined;
-  scrappedProductPageOne: ProductOne | undefined;
-  scrappedProductPageTwo: ProductTwo | undefined;
+  scrappedProduct: ScrapperProduct[] | undefined;
 
   constructor(private productService: ProductService,
               private route: ActivatedRoute,
@@ -62,27 +60,16 @@ export class ProductDetailsComponent implements OnInit {
       data => {
         this.product = data;
         this.getProductDetails(this.product.id.toString());
-        this.getScrappedProductPageOne(this.product.sku.toString());
-        this.getScrappedProductPageTwo(this.product.sku.toString());
+        this.getScrappedProduct(this.product.sku.toString());
       }
     );
   }
 
-  getScrappedProductPageOne(sku: string) {
-    this.correlationService.getProductOneBySku(sku).subscribe(
+  getScrappedProduct(sku: string) {
+    this.correlationService.getProductBySku(sku).subscribe(
       data => {
         console.log(data);
-        this.scrappedProductPageOne = data;
-      }
-    )
-  }
-
-
-  getScrappedProductPageTwo(sku: string) {
-    this.correlationService.getProductTwoBySku(sku).subscribe(
-      data => {
-        console.log(data);
-        this.scrappedProductPageTwo = data;
+        this.scrappedProduct = data;
       }
     )
   }

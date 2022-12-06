@@ -79,33 +79,22 @@
                     </div>
                 </div>
 
-                <div *ngIf="scrappedProductPageOne?.id != -1 || scrappedProductPageTwo?.id != -1">
+                <div *ngIf="scrappedProduct?.length != 0">
                     <hr>
                 </div>
 
 
                 <div class="product-other-sites">
-                    <div *ngIf="scrappedProductPageOne?.id != -1 || scrappedProductPageTwo?.id != -1">
+                    <div *ngIf="scrappedProduct?.length != 0">
                         <h1>Cena produktu na innych stronach: </h1>
-                    </div>
-
-                    <div *ngIf="scrappedProductPageOne?.id != -1">
-                        <div class="product-one">
-                            <a href="{{scrappedProductPageOne?.pageUrl}}">
-                                <p id="product-one-name">{{ scrappedProductPageOne?.pageName }}</p>
-                                <p id="product-one-price">Cena: {{scrappedProductPageOne?.unitPrice}} PLN</p>
+                        <div class="product-one" *ngFor="let tempScrapperProduct of scrappedProduct">
+                            <a href="{{tempScrapperProduct?.pageUrl}}">
+                                <p id="product-one-name">{{ tempScrapperProduct?.pageName }}</p>
+                                <p id="product-one-price">Cena: {{tempScrapperProduct?.unitPrice}} PLN</p>
                             </a>
                         </div>
                     </div>
                   
-                    <div *ngIf="scrappedProductPageTwo?.id != -1">
-                        <div class="product-two">
-                            <a href="{{scrappedProductPageTwo?.pageUrl}}">
-                                <p id="product-two-name">{{ scrappedProductPageTwo?.pageName }}</p>
-                                <p id="product-two-price">Cena: {{scrappedProductPageTwo?.unitPrice}} PLN</p>
-                            </a>
-                        </div>
-                    </div>
                 </div>
 
                 <hr>
