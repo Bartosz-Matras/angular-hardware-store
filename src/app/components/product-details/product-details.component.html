@@ -44,7 +44,14 @@
                         <div class="product-head-price">
                             <div class="product-price-info">
                                 <hr>
-                                <p>Dostępne: {{product?.unitsInStock }} szt.</p>
+                                <div *ngIf="product!.unitsInStock > 0; then productInStockEnable; else productInStockDisabled">
+                                </div>
+                                <ng-template #productInStockEnable>
+                                    <p>Dostępne: {{product?.unitsInStock }} szt.</p>
+                                </ng-template >
+                                <ng-template #productInStockDisabled>
+                                    <p>Dostępne: 0 szt.</p>
+                                </ng-template>
                                 <hr>
                                 <p>Dostawa: 0 PLN</p>
                                 <hr>
@@ -53,10 +60,20 @@
                             <div class="product-price">
                                 <h2>{{product?.unitPrice }} PLN</h2>
                                 <p>Cena brutto / 1 szt.</p>
-                                <a routerLink="/cart-details">
-                                    <i class="fa fa-shopping-cart fa-xl" aria-hidden="true"></i>
-                                    <p>Dodaj do koszyka</p>
-                                </a>
+                                <div *ngIf="product!.unitsInStock > 0; then productInStockButtonEnable; else productInStockButtonDisabled">
+                                </div>
+                                <ng-template #productInStockButtonEnable>
+                                    <button (click)="addToCart(product!)" class="productButtonEnable">
+                                        <i class="fa fa-shopping-cart fa-xl" aria-hidden="true"></i>
+                                        <p>Dodaj do koszyka</p>
+                                    </button>
+                                </ng-template>
+                                <ng-template #productInStockButtonDisabled>
+                                    <a class="productButtonDiasbled">
+                                        <p>Produkt niedostępny</p>
+                                    </a>
+                                </ng-template>
+                                
                             </div>
                         </div>
                     </div>

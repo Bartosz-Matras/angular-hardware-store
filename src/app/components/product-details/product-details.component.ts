@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { CartProduct } from 'src/app/common/cart-product';
 import { Product } from 'src/app/common/product';
 import { ProductAlsoBought } from 'src/app/common/product-also-bought';
 import { ProductAlsoWatched } from 'src/app/common/product-also-watched';
 import { ProductCategory } from 'src/app/common/product-category';
 import { ProductDetails } from 'src/app/common/product-details';
 import { ScrapperProduct } from 'src/app/common/scrapper-product';
+import { CartServiceService } from 'src/app/services/cart-service.service';
 import { CorrelationServiceService } from 'src/app/services/correlation-service.service';
 import { ProductService } from 'src/app/services/product.service';
 
@@ -27,7 +29,8 @@ export class ProductDetailsComponent implements OnInit {
 
   constructor(private productService: ProductService,
               private route: ActivatedRoute,
-              private correlationService: CorrelationServiceService) { }
+              private correlationService: CorrelationServiceService,
+              private cartService: CartServiceService) { }
 
   ngOnInit(): void {
     this.listProductCategories();
@@ -88,7 +91,6 @@ export class ProductDetailsComponent implements OnInit {
         var indexes = this.get5ProductsAlsoBought(data);
         this.correlationService.get5Products(indexes).subscribe(
           data => {
-            console.log(data);
             this.productAlsoBought = data;
           }
         );
@@ -100,7 +102,6 @@ export class ProductDetailsComponent implements OnInit {
         var indexes = this.get5ProductsAlsoWatched(data);
         this.correlationService.get5Products(indexes).subscribe(
           data => {
-            console.log(data);
             this.productAlsoWatched = data;
           }
         );
@@ -141,6 +142,13 @@ export class ProductDetailsComponent implements OnInit {
       }
     }
     return indexes.toString();
+  }
+
+
+  addToCart(tempProduct: Product) {
+    const theCartProduct = new CartProduct(tempProduct);
+
+    this.cartService.addToCart(theCartProduct);
   }
 
 }

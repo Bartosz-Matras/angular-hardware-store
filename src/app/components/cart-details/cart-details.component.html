@@ -1,1 +1,139 @@
-<p>cart-details works!</p>
+<div class="page-details">
+    <div class="container-fluid mx-5 my-3">
+        <a class="cart-details-a" routerLink="/products">
+            <p>Wróć do zakupów</p>
+            <i class="fa-solid fa-arrow-turn-up fa-xs"></i>
+        </a>
+        
+        <h2>Twój koszyk</h2>
+        <hr>
+
+        <div class="cart-main-content">
+            <div *ngIf="cartProducts!.length > 0; then mainContentThen; else mainContentElse;">
+            </div>
+    
+            <ng-template #mainContentThen>
+                <div class="cart-info">
+                    <p class="cart-info-product">Produkt</p>
+                    <p class="cart-info-unit-price">Cena 1 szt.</p>
+                    <p class="cart-info-quantity">Ilość</p>
+                    <p class="cart-info-whole-price">Suma</p>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-12" *ngFor="let tempCartProduct of cartProducts">
+                        <div class="cart-item">
+                            <div class="cart-item-image">
+                                <a routerLink="/products/{{tempCartProduct.id}}">
+                                    <img src="{{ tempCartProduct.imageUrl }}">
+                                </a>
+                            </div>
+                            <div class="cart-item-text">
+                                <a routerLink="/products/{{tempCartProduct.id}}">
+                                    <div class="cart-item-text-info">
+                                        <p>{{ tempCartProduct.name }}</p>
+                                        <p class="cart-item-sku">Kod producenta: {{ tempCartProduct.sku }}</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <p class="cart-item-price">{{ tempCartProduct.unitPrice }} PLN</p>
+                            <p class="cart-item-quantity">{{ tempCartProduct.quantity }}</p>
+                            <p class="cart-item-wholePrice">{{ tempCartProduct.unitPrice * tempCartProduct.quantity }} PLN</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="cart-info-details">
+                    <div class="cart-discount-div">
+                        <div class="cart-discount">
+                            <input #inputDiscount type="text"
+                                                placeholder="Kod rabatowy:"
+                                                class="input-discount"
+                                                style="text-transform: uppercase;"
+                                                (keyup.enter)="doDiscount(inputDiscount.value)" />
+                            <button class="button-discount" (click)="doDiscount(inputDiscount.value)">
+                                Dodaj
+                            </button>
+                        </div>
+                        <div *ngIf="discountClicked === true">
+                            <div *ngIf="codeIsValid === true; then codeValid; else codeInvalid;">
+                            </div>
+    
+                            <ng-template #codeValid>
+                                <p style="color: green;">Pomyślnie dodano kod</p>
+                            </ng-template>
+    
+                            <ng-template #codeInvalid>
+                                <p style="color: red;">Niepoprawny kod albo stracił ważność</p>
+                            </ng-template>
+                        </div>
+                    </div>
+                    <div class="cart-info-p">
+                        <div *ngIf="codeIsValid === true; then codeValidPrice; else codeInvalidPrice;">
+                        </div>
+
+                        <ng-template #codeValidPrice>
+                            <p>Wartośc koszyka: {{discountWholePrice}} PLN (-{{discount!.discountPercent}}%)</p>
+                            <p style="text-decoration: line-through;">{{wholePrice}} PLN</p>
+                            <p>Ilość rzeczy w koszyku: {{wholeQuantity}}</p>
+                        </ng-template>
+
+                        <ng-template #codeInvalidPrice>
+                            <p>Wartośc koszyka: {{wholePrice}} PLN</p>
+                            <p>Ilość rzeczy w koszyku: {{wholeQuantity}}</p>
+                        </ng-template>
+                    </div>
+                </div>
+            </ng-template>
+    
+            <ng-template #mainContentElse>
+                <div class="cart-empty">
+                    <p>Twój koszyk jest pusty</p>
+                    <button routerLink="/products" class="btn btm-primary">
+                        Powrót do zakupów
+                    </button>
+                </div>
+            </ng-template>
+        </div>
+
+        <div class="cart-buy">
+
+        </div>
+
+        <button class="btn btn-primart">UZUPEŁNIJ DANE</button>
+
+        <hr>
+        <h1>Polecamy</h1>
+        <p class="cart-also-bought-text">Inni kupowali również</p>
+        <div class="cart-also-watched">
+            <div class="cart-watched" *ngFor="let tempProduct of productAlsoBought">
+                <div class="cart-product-watched-image">
+                    <a routerLink="/products/{{tempProduct.id}}">
+                        <img src="{{tempProduct.imageUrl}}" class="img-fluid">
+                    </a>
+                </div>
+                <div class="cart-product-watched-text">
+                    <a routerLink="/products/{{tempProduct.id}}">
+                        <p> {{tempProduct.name }}</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <p class="cart-also-watched-text">Inni oglądali również</p>
+        <div class="cart-also-watched">
+            <div class="cart-watched" *ngFor="let tempProduct of productAlsoWatched">
+                <div class="cart-product-watched-image">
+                    <a routerLink="/products/{{tempProduct.id}}">
+                        <img src="{{tempProduct.imageUrl}}" class="img-fluid">
+                    </a>
+                </div>
+                <div class="cart-product-watched-text">
+                    <a routerLink="/products/{{tempProduct.id}}">
+                        <p> {{tempProduct.name }}</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

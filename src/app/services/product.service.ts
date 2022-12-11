@@ -31,37 +31,66 @@ export class ProductService {
 
     const productSubCategoryUrl = `${this.subCategoryUrl}` +
           `/search/findProductSubCategoryByProductCategoryId?id=${id}`;
-    console.log(productSubCategoryUrl);
     return this.httpClient.get<GetResponseProductsSubCategory>(productSubCategoryUrl).pipe(
       map(response => response._embedded.productsSubCategory)
     );
   }
 
-  getProductsSubCategories(id: string): Observable<Product[]> {
-    const productSubCategoryUrl = `${this.productUrl}` +
-          `/search/findProductByProductSubCategoryIdIn?ids=${id}`;
-    return this.httpClient.get<GetResponseProducts>(productSubCategoryUrl).pipe(
-      map(response => response._embedded.products)
-    );
-  }
 
-  searchProducts(theKeyWord: string): Observable<Product[]> {
+
+
+  searchProducts(thePage: number, 
+                thePageSize: number,
+                theKeyWord: string,
+                sortString: string): Observable<GetResponseProducts> {
 
     // need to build URL based on keyword
-    const searchUrl = `${this.productUrl}/search/findByNameContaining?name=${theKeyWord}`;
+    const searchUrl = `${this.productUrl}/search/findByNameContaining`
+                      +`?name=${theKeyWord}&page=${thePage}&size=${thePageSize}&sort=${sortString}`;
     console.log(searchUrl);
+
     return this.getProducts(searchUrl);
   }
 
-  getProductList(): Observable<Product[]> {
-    return this.getProducts(this.productUrl);
+  getProductList(thePage: number, 
+                thePageSize: number,
+                sortString: string): Observable<GetResponseProducts> {
+    const productsUrl = `${this.productUrl}?page=${thePage}&size=${thePageSize}&sort=${sortString}`;
+    console.log(productsUrl);
+
+    return this.getProducts(productsUrl);
   }
 
-  private getProducts(searchUrl: string): Observable<Product[]>{
-    return this.httpClient.get<GetResponseProducts>(searchUrl).pipe(
-      map(response => response._embedded.products)
-    );
+  private getProducts(searchUrl: string): Observable<GetResponseProducts>{
+    return this.httpClient.get<GetResponseProducts>(searchUrl);
   }
+
+  getProductsSubCategories(thePage: number, 
+                          thePageSize: number,
+                          sortString: string,
+                          id: string): Observable<GetResponseProducts> {
+    const productSubCategoryUrl = `${this.productUrl}` +
+    `/search/findProductByProductSubCategoryIdIn?ids=${id}` +
+    `&page=${thePage}&size=${thePageSize}&sort=${sortString}`;
+
+    console.log(productSubCategoryUrl);
+    return this.httpClient.get<GetResponseProducts>(productSubCategoryUrl);
+  }
+
+  getProductsSubCategory(thePage: number, 
+                        thePageSize: number,
+                        sortString: string,
+                        id: number): Observable<GetResponseProducts> {
+    const url = `${this.productUrl}/search/findProductByProductSubCategoryId?id=${id}` +
+                `&page=${thePage}&size=${thePageSize}&sort=${sortString}`;
+    console.log(url);
+
+    return this.httpClient.get<GetResponseProducts>(url);
+  }
+
+  
+
+
 
   getProduct(id: string): Observable<Product> {
     const url = `${this.productUrl}/search/findProductById?id=${id}`;
@@ -72,14 +101,6 @@ export class ProductService {
     const url = `${this.productDetailsUrl}/search/findProductDetailsByProductId?id=${id}`;
     return this.httpClient.get<ProductDetails>(url);
   }
-
-  getProductsSubCategory(id: number): Observable<Product[]> {
-    const url = `${this.productUrl}/search/findProductByProductSubCategoryId?id=${id}`;
-    return this.httpClient.get<GetResponseProducts>(url).pipe(
-      map(response => response._embedded.products)
-    );
-  }
-
 }
 
 interface GetResponseProducts {

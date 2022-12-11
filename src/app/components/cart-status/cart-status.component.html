@@ -1,6 +1,9 @@
 <div class="cart-div">
-    <a routerLink="/cart-details">
+    <a routerLink="/cartDetails">
         <i class="fa fa-shopping-cart fa-xl" aria-hidden="true"></i>
-        <p>Koszyk</p>
+        <div class="cart-div-details">
+            <p>Koszyk</p>
+            <p>({{ wholeQuantity }})</p>
+        </div>
     </a>
 </div>
