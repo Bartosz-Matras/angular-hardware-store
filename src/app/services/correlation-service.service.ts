@@ -30,6 +30,14 @@ export class CorrelationServiceService {
 
   getAllProductsAlsoWatched(): Observable<ProductAlsoWatched[]> {
     const url = `${this.productAlsoWatchedUrl}/search/findAllByOrderByWatchedCountDesc`;
+    console.log('getAllProductsAlsoWatched = ' + url);
+    return this.httpClient.get<GetResponseProductAlsoWatched>(url).pipe(
+      map(response => response._embedded.productsAlsoWatched)
+    );
+  }
+
+  getProductsAlsoWatchedByIdFather(ids: number[]): Observable<ProductAlsoWatched[]> {
+    const url = `${this.productAlsoWatchedUrl}/search/findAllByIdFatherProductInOrderByWatchedCountDesc?ids=${ids}`;
     return this.httpClient.get<GetResponseProductAlsoWatched>(url).pipe(
       map(response => response._embedded.productsAlsoWatched)
     );
@@ -45,6 +53,11 @@ export class CorrelationServiceService {
   getProductBySku(sku: string): Observable<ScrapperProduct[]> {
     const url = `${this.productScrapperUrl}/search/findScrapperProductsBySku?sku=${sku}`;
     return this.httpClient.get<ScrapperProduct[]>(url);
+  }
+
+  updateProductsAlsoWatched(id: string, ids: Number[]) {
+    const url = `http://localhost:8080/api/discounts/update?ids=${ids}&id=${id}`;
+    this.httpClient.get<Number[]>(url).subscribe();
   }
 
 

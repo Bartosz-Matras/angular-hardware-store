@@ -37,8 +37,22 @@
                                 </a>
                             </div>
                             <p class="cart-item-price">{{ tempCartProduct.unitPrice }} PLN</p>
-                            <p class="cart-item-quantity">{{ tempCartProduct.quantity }}</p>
-                            <p class="cart-item-wholePrice">{{ tempCartProduct.unitPrice * tempCartProduct.quantity }} PLN</p>
+                            <div class="cart-item-quantity">
+                                <button (click)="incrementQuantity(tempCartProduct)" class="cart-button">
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
+                                <p>{{ tempCartProduct.quantity }}</p>
+                                <button (click)="decrementQuantity(tempCartProduct)" class="cart-button">
+                                    <i class="fa-solid fa-minus"></i>
+                                </button>
+                            </div>
+                            <p class="cart-item-wholePrice">{{ (tempCartProduct.unitPrice * tempCartProduct.quantity).toFixed(2) }} PLN</p>
+                            <div class="cart-item-delete">
+                                <button class="button-delete" (click)="remove(tempCartProduct)">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </button>
+                            </div>
+    
                         </div>
                     </div>
                 </div>
@@ -73,14 +87,25 @@
                         </div>
 
                         <ng-template #codeValidPrice>
-                            <p>Wartośc koszyka: {{discountWholePrice}} PLN (-{{discount!.discountPercent}}%)</p>
-                            <p style="text-decoration: line-through;">{{wholePrice}} PLN</p>
+                            <div *ngIf="shippingPrice === '9.99'; then shippingThen; else shippingElse">
+                            </div>
+
+                            <ng-template #shippingThen>
+                                <p>Wartośc koszyka: {{discountWholePrice}} PLN (-{{discount!.discountPercent}}%)</p>
+                                <p style="text-decoration: line-through;">{{wholePrice}} PLN</p>
+                            </ng-template>
+                            <ng-template #shippingElse>
+                                <p>Wartośc koszyka: {{discountWholePrice}} PLN</p>
+                            </ng-template>
+                            
                             <p>Ilość rzeczy w koszyku: {{wholeQuantity}}</p>
+                            <p>Dostawa: {{ shippingPrice }}</p>
                         </ng-template>
 
                         <ng-template #codeInvalidPrice>
                             <p>Wartośc koszyka: {{wholePrice}} PLN</p>
                             <p>Ilość rzeczy w koszyku: {{wholeQuantity}}</p>
+                            <p>Dostawa: {{ shippingPrice }} PLN</p>
                         </ng-template>
                     </div>
                 </div>
@@ -97,11 +122,15 @@
         </div>
 
         <div class="cart-buy">
-
+            <a>
+                <button class="cart-buy-button">
+                    ZAMAWIAM 
+                    <i class="fa-solid fa-arrow-right fa-lg"></i>
+                </button>
+            </a>
         </div>
 
-        <button class="btn btn-primart">UZUPEŁNIJ DANE</button>
-
+    
         <hr>
         <h1>Polecamy</h1>
         <p class="cart-also-bought-text">Inni kupowali również</p>

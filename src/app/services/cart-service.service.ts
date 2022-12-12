@@ -13,6 +13,7 @@ export class CartServiceService {
 
   wholePrice: Subject<number> = new Subject<number>();
   wholeQuantity: Subject<number> = new Subject<number>();
+  numberOfProducts: Subject<number> = new Subject<number>();
 
   constructor(private httpClient: HttpClient) {
     this.cartProducts = JSON.parse(sessionStorage.getItem('cartProducts')!) != null 
@@ -32,7 +33,10 @@ export class CartServiceService {
     }
 
     if (productExistsInCart) {
-      existingProduct!.quantity++;
+      if(existingProduct!.unitsInStock > existingProduct!.quantity){
+        existingProduct!.quantity++;
+      }
+     
     }else {
       this.cartProducts.push(theCartProduct);
     }
@@ -51,6 +55,7 @@ export class CartServiceService {
 
     this.wholePrice.next(+wholePriceValue.toFixed(2));
     this.wholeQuantity.next(wholeQuantityValue);
+    this.numberOfProducts.next(this.cartProducts.length);
 
     this.persistCartProducst();
   }
@@ -62,5 +67,27 @@ export class CartServiceService {
   getDiscount(code: string): Observable<Discount> {
     const discountUrl = `http://localhost:8080/api/discounts/search/findDiscountByDiscountCode?discountCode=${code}`;
     return this.httpClient.get<Discount>(discountUrl);
+  }
+
+  decrementQuantity(theCartProduct: CartProduct) {
+
+    theCartProduct.quantity--;
+
+    if (theCartProduct.quantity === 0) {
+      this.remove(theCartProduct);
+    }else {
+      this.computeWholePriceAndQuantity();
+    }
+  }
+
+  remove(theCartProduct: CartProduct) {
+    const productIndex = this.cartProducts
+        .findIndex(tempCartProduct => tempCartProduct.id === theCartProduct.id);
+
+    if(productIndex > -1) {
+      this.cartProducts.splice(productIndex, 1);
+
+      this.computeWholePriceAndQuantity();
+    }
   }
 }

@@ -24,6 +24,7 @@ export class CartDetailsComponent implements OnInit {
   codeIsValid: boolean = false;
   discountClicked: boolean = false;
   discountWholePrice: string = "";
+  shippingPrice: string = "9.99";
 
   constructor(private cartService: CartServiceService,
               private correlationService: CorrelationServiceService) { }
@@ -59,16 +60,31 @@ export class CartDetailsComponent implements OnInit {
       }
     );
 
-    this.correlationService.getAllProductsAlsoWatched().subscribe(
-      data => {
-        var indexes = this.get5ProductsAlsoWatched(data);
-        this.correlationService.get5Products(indexes).subscribe(
-          data => {
-            this.productAlsoWatched = data;
-          }
-        );
-      }
-    );
+    if(this.cartService.cartProducts.length > 0) {
+      var cartProductsId = this.cartService.cartProducts.map(item => item.id);
+      this.correlationService.getProductsAlsoWatchedByIdFather(cartProductsId).subscribe(
+        data => {
+          var indexes = this.get5ProductsAlsoWatched(data, cartProductsId);
+          this.correlationService.get5Products(indexes).subscribe(
+            data => {
+              this.productAlsoWatched = data;
+            }
+          );
+        }
+      );
+    }else {
+      var cartProductsId: number[] = [];
+      this.correlationService.getAllProductsAlsoWatched().subscribe(
+        data => {
+          var indexes = this.get5ProductsAlsoWatched(data, cartProductsId);
+          this.correlationService.get5Products(indexes).subscribe(
+            data => {
+              this.productAlsoWatched = data;
+            }
+          );
+        }
+      );
+    }
   }
 
   get5ProductsAlsoBought(data: ProductAlsoBought[]): string {
@@ -88,13 +104,13 @@ export class CartDetailsComponent implements OnInit {
     return indexes.toString();
   }
 
-  get5ProductsAlsoWatched(data: ProductAlsoWatched[]) : string {
+  get5ProductsAlsoWatched(data: ProductAlsoWatched[], cartProductsId: number[]) : string {
     var indexes = new Array<Number>;
     var i : number = 0;
 
     for(var element of data){
-      if (!indexes.includes(element.idFatherProduct)) {
-        indexes.push(element.idFatherProduct);
+      if (!indexes.includes(element.idProduct) && !cartProductsId.includes(element.idProduct)) {
+        indexes.push(element.idProduct);
         i++;
       }
 
@@ -114,10 +130,27 @@ export class CartDetailsComponent implements OnInit {
         if(this.discount != undefined) {
           this.codeIsValid = true;
         }
-        this.discountWholePrice = ((this.wholePrice * (100 - +this.discount.discountPercent))/ 100).toFixed(2);
+        if(+this.discount.discountPercent === 0){
+          this.discountWholePrice = this.wholePrice.toString();
+          this.shippingPrice = "FREE";
+        }else {
+          this.discountWholePrice = ((this.wholePrice * (100 - +this.discount.discountPercent))/ 100).toFixed(2);
+          this.shippingPrice = "9.99";
+        }
       }
     );
   }
 
+  incrementQuantity(theCartProduct: CartProduct) {
+    this.cartService.addToCart(theCartProduct);
+  }
+
+  decrementQuantity(theCartProduct: CartProduct) {
+    this.cartService.decrementQuantity(theCartProduct);
+  }
+
+  remove(theCartProduct: CartProduct) {
+    this.cartService.remove(theCartProduct);
+  }
 
 }

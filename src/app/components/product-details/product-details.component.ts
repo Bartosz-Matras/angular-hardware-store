@@ -38,8 +38,11 @@ export class ProductDetailsComponent implements OnInit {
     this.route.paramMap.subscribe(() => {
       this.handleProductDetails();
       this.handleProductsCorrelation();
+      this.cartService.computeWholePriceAndQuantity();
     });
   }
+
+  
 
   handleProductDetails() {
     this.hasProductId = this.route.snapshot.paramMap.has('id');
@@ -64,6 +67,7 @@ export class ProductDetailsComponent implements OnInit {
         this.product = data;
         this.getProductDetails(this.product.id.toString());
         this.getScrappedProduct(this.product.sku.toString());
+        this.handleProductAlsoWatched(this.product.id.toString())
       }
     );
   }
@@ -71,7 +75,6 @@ export class ProductDetailsComponent implements OnInit {
   getScrappedProduct(sku: string) {
     this.correlationService.getProductBySku(sku).subscribe(
       data => {
-        console.log(data);
         this.scrappedProduct = data;
       }
     )
@@ -97,18 +100,32 @@ export class ProductDetailsComponent implements OnInit {
       }
     );
 
-    this.correlationService.getAllProductsAlsoWatched().subscribe(
-      data => {
-        var indexes = this.get5ProductsAlsoWatched(data);
-        this.correlationService.get5Products(indexes).subscribe(
-          data => {
-            this.productAlsoWatched = data;
-          }
-        );
-      }
-    );
-
+    if(this.cartService.cartProducts.length > 0) {
+      var cartProductsId = this.cartService.cartProducts.map(item => item.id);
+      this.correlationService.getProductsAlsoWatchedByIdFather(cartProductsId).subscribe(
+        data => {
+          var indexes = this.get5ProductsAlsoWatched(data);
+          this.correlationService.get5Products(indexes).subscribe(
+            data => {
+              this.productAlsoWatched = data;
+            }
+          );
+        }
+      );
+    }else {
+      this.correlationService.getAllProductsAlsoWatched().subscribe(
+        data => {
+          var indexes = this.get5ProductsAlsoWatched(data);
+          this.correlationService.get5Products(indexes).subscribe(
+            data => {
+              this.productAlsoWatched = data;
+            }
+          );
+        }
+      );
+    }
   }
+
 
   get5ProductsAlsoBought(data: ProductAlsoBought[]): string {
     var indexes = new Array<Number>;
@@ -132,8 +149,8 @@ export class ProductDetailsComponent implements OnInit {
     var i : number = 0;
 
     for(var element of data){
-      if (!indexes.includes(element.idFatherProduct)) {
-        indexes.push(element.idFatherProduct);
+      if (!indexes.includes(element.idProduct) && this.product?.id != element.idProduct) {
+        indexes.push(element.idProduct);
         i++;
       }
 
@@ -149,6 +166,14 @@ export class ProductDetailsComponent implements OnInit {
     const theCartProduct = new CartProduct(tempProduct);
 
     this.cartService.addToCart(theCartProduct);
+  }
+
+
+  handleProductAlsoWatched(id: string) {
+    var tempCartProducts = this.cartService.cartProducts.map(item => item.id);
+    if(tempCartProducts.length != 0){
+      this.correlationService.updateProductsAlsoWatched(id, tempCartProducts);
+    }
   }
 
 }

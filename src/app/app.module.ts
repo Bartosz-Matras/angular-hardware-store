@@ -12,6 +12,7 @@ import { CartStatusComponent } from './components/cart-status/cart-status.compon
 import { CartDetailsComponent } from './components/cart-details/cart-details.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CheckoutComponent } from './components/checkout/checkout.component';
 
 const routes: Routes = [
   {path: 'search/:keyword', component: ProductCategoryComponent},
@@ -32,7 +33,8 @@ const routes: Routes = [
     SearchComponent,
     ProductDetailsComponent,
     CartStatusComponent,
-    CartDetailsComponent,  ],
+    CartDetailsComponent,
+    CheckoutComponent,  ],
   imports: [
     RouterModule.forRoot(routes, {
       scrollPositionRestoration: 'enabled'

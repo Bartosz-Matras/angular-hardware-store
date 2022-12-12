@@ -47,7 +47,6 @@ export class ProductService {
     // need to build URL based on keyword
     const searchUrl = `${this.productUrl}/search/findByNameContaining`
                       +`?name=${theKeyWord}&page=${thePage}&size=${thePageSize}&sort=${sortString}`;
-    console.log(searchUrl);
 
     return this.getProducts(searchUrl);
   }
@@ -56,7 +55,6 @@ export class ProductService {
                 thePageSize: number,
                 sortString: string): Observable<GetResponseProducts> {
     const productsUrl = `${this.productUrl}?page=${thePage}&size=${thePageSize}&sort=${sortString}`;
-    console.log(productsUrl);
 
     return this.getProducts(productsUrl);
   }
@@ -83,7 +81,6 @@ export class ProductService {
                         id: number): Observable<GetResponseProducts> {
     const url = `${this.productUrl}/search/findProductByProductSubCategoryId?id=${id}` +
                 `&page=${thePage}&size=${thePageSize}&sort=${sortString}`;
-    console.log(url);
 
     return this.httpClient.get<GetResponseProducts>(url);
   }

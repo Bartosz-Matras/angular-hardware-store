@@ -36,6 +36,7 @@ export class ProductSubCategoryComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap.subscribe(() => {
       this.listProducts(this.basicSortString);
+      this.cartService.computeWholePriceAndQuantity();
     });
   }
 
