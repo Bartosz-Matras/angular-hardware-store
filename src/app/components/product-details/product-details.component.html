@@ -31,6 +31,49 @@
 
 
         <ng-template #productElse>
+            <div *ngIf="categoryIdExist && categoryNameExist && !subCategoryIdExist && !subCategoryNameExist">
+                <div class="product-back">
+                    <a routerLink="/category">
+                        <p>
+                            KATEGORIE 
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </p> 
+                    </a>
+                    <a routerLink="/category/{{productCategoryId}}/{{productCategoryName}}">
+                        <p>
+                            &nbsp;
+                            {{ productCategoryName }} 
+                        </p> 
+                    </a>
+                </div>
+                <hr>
+            </div>
+
+            <div *ngIf="categoryIdExist && categoryNameExist && subCategoryIdExist && subCategoryNameExist">
+                <div class="product-back">
+                    <a routerLink="/category">
+                        <p>
+                            KATEGORIE 
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </p> 
+                    </a>
+                    <a routerLink="/category/{{productCategoryId}}/{{productCategoryName}}">
+                        <p>
+                            &nbsp;
+                            {{ productCategoryName }} 
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </p> 
+                    </a>
+                    <a routerLink="/subCategory/{{productCategoryId}}/{{productCategoryName}}/{{productSubCategoryId}}/{{productSubCategoryName}}">
+                        <p>
+                            &nbsp;
+                            {{ productSubCategoryName }} 
+                        </p> 
+                    </a>
+                </div>
+                <hr>
+            </div>
+            
             <div class="product-content-main">
                 <div class="product-content-head">
                     <div class="product-head-image" >

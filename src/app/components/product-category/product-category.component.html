@@ -85,16 +85,35 @@
                         <!-- loop over the collection off products-->
                         <div *ngFor="let tempProduct of products" class="col-xxl-3 col-xl-4 col-md-6 col-sm-12">
                             <div class="product-box">
-                                <div class="product-image">
-                                    <a routerLink="/products/{{ tempProduct.id }}">
-                                        <img src="{{ tempProduct.imageUrl }}" >
-                                    </a>
+                                <div *ngIf="productSubCategories.length == 0; then detailsThen; else detailElse">
                                 </div>
-                                <div class="product-name text-center">
-                                    <a routerLink="/products/{{ tempProduct.id }}">
-                                        <p> {{ tempProduct.name }} </p>                           
-                                    </a>
-                                </div>           
+                                <ng-template #detailsThen>
+                                    <div class="product-image">
+                                        <a routerLink="/products/{{ tempProduct.id }}">
+                                            <img src="{{ tempProduct.imageUrl }}" >
+                                        </a>
+                                    </div>
+                                    <div class="product-name text-center">
+                                        <a routerLink="/products/{{ tempProduct.id }}">
+                                            <p> {{ tempProduct.name }} </p>                           
+                                        </a>
+                                    </div> 
+                                </ng-template>
+
+                                <ng-template #detailElse>
+                                    <div class="product-image">
+                                        <a routerLink="/products/{{ tempProduct.id }}/{{currentCategoryId}}/{{currentCategoryName}}">
+                                            <img src="{{ tempProduct.imageUrl }}" >
+                                        </a>
+                                    </div>
+                                    <div class="product-name text-center">
+                                        <a routerLink="/products/{{ tempProduct.id }}/{{currentCategoryId}}/{{currentCategoryName}}">
+                                            <p> {{ tempProduct.name }} </p>                           
+                                        </a>
+                                    </div> 
+                                </ng-template>
+
+                                          
                                 <div class="price text-center">{{ tempProduct.unitPrice | number : '1.2-2' }} PLN</div>   
                                 <button (click)="addToCart(tempProduct)" class="btn btn-success btn-sm btn-size">Dodaj do koszyka</button>              
                             </div>

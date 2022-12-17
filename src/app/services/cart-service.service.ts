@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { AsyncSubject, Observable, ReplaySubject, Subject } from 'rxjs';
 import { CartProduct } from '../common/cart-product';
 import { Discount } from '../common/discount';
 
@@ -14,6 +14,9 @@ export class CartServiceService {
   wholePrice: Subject<number> = new Subject<number>();
   wholeQuantity: Subject<number> = new Subject<number>();
   numberOfProducts: Subject<number> = new Subject<number>();
+
+  sendWholePrice: Subject<number> = new ReplaySubject<number>();
+  sendShippingCost: Subject<string> = new ReplaySubject<string>();
 
   constructor(private httpClient: HttpClient) {
     this.cartProducts = JSON.parse(sessionStorage.getItem('cartProducts')!) != null 
@@ -89,5 +92,10 @@ export class CartServiceService {
 
       this.computeWholePriceAndQuantity();
     }
+  }
+
+  saveData(wPrice: number, sPrice: string) {
+    this.sendWholePrice.next(wPrice);
+    this.sendShippingCost.next(sPrice);
   }
 }

@@ -153,4 +153,14 @@ export class CartDetailsComponent implements OnInit {
     this.cartService.remove(theCartProduct);
   }
 
+  saveData() {
+    if(this.discountWholePrice === ""){
+      this.cartService
+      .saveData(this.wholePrice, this.shippingPrice);
+    }else {
+      this.cartService
+      .saveData(+this.discountWholePrice, this.shippingPrice);
+    }
+  }
+
 }

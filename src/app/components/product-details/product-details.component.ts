@@ -18,6 +18,18 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class ProductDetailsComponent implements OnInit {
 
+  productCategoryName: string = "";
+  productCategoryId: number = 0;
+  productSubCategoryName: string = "";
+  productSubCategoryId: number = 0;
+
+  categoryIdExist: boolean = false;
+  categoryNameExist: boolean = false;
+
+  subCategoryIdExist: boolean = false;
+  subCategoryNameExist: boolean = false;
+
+
   productCategories: ProductCategory[] = [];
   product: Product | undefined;
   productDetails: ProductDetails | undefined;
@@ -33,6 +45,24 @@ export class ProductDetailsComponent implements OnInit {
               private cartService: CartServiceService) { }
 
   ngOnInit(): void {
+    this.categoryIdExist = this.route.snapshot.paramMap.has('idC');
+    this.categoryNameExist = this.route.snapshot.paramMap.has('nameC');
+    if(this.categoryIdExist && this.categoryNameExist){
+      this.productCategoryId = +this.route.snapshot.paramMap.get('idC')!;
+      this.productCategoryName = this.route.snapshot.paramMap.get('nameC')!;
+    }
+
+    this.subCategoryIdExist = this.route.snapshot.paramMap.has('idS');
+    this.subCategoryNameExist = this.route.snapshot.paramMap.has('nameS');
+    
+    if(this.subCategoryIdExist && this.subCategoryNameExist){
+      this.productSubCategoryId = +this.route.snapshot.paramMap.get('idS')!;
+      this.productSubCategoryName = this.route.snapshot.paramMap.get('nameS')!;  
+    }
+
+    console.log(this.productCategoryId + " = " + this.productCategoryName + " = "  + 
+        this.productSubCategoryId + " = " + this.productSubCategoryName)
+
     this.listProductCategories();
 
     this.route.paramMap.subscribe(() => {

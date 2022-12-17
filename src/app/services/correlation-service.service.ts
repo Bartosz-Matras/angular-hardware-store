@@ -30,7 +30,6 @@ export class CorrelationServiceService {
 
   getAllProductsAlsoWatched(): Observable<ProductAlsoWatched[]> {
     const url = `${this.productAlsoWatchedUrl}/search/findAllByOrderByWatchedCountDesc`;
-    console.log('getAllProductsAlsoWatched = ' + url);
     return this.httpClient.get<GetResponseProductAlsoWatched>(url).pipe(
       map(response => response._embedded.productsAlsoWatched)
     );

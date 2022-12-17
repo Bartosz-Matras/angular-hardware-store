@@ -40,13 +40,13 @@
                         <div *ngFor="let tempProduct of products" class="col-xxl-3 col-xl-4 col-md-6 col-sm-12">
                             <div class="product-box">
                                 <div class="product-image">
-                                    <a routerLink="/products/{{ tempProduct.id }}">
+                                    <a routerLink="/products/{{ tempProduct.id }}/{{currentCategoryId}}/{{currentCategoryName}}/{{currentSubCategoryId}}/{{currentSubCategoryName}}">
                                         <img src="{{ tempProduct.imageUrl }}" >
                                     </a>
                                     <!-- class="img-responsive" -->
                                 </div>
                                 <div class="product-name text-center">
-                                    <a routerLink="/products/{{ tempProduct.id }}">
+                                    <a routerLink="/products/{{ tempProduct.id }}/{{currentCategoryId}}/{{currentCategoryName}}/{{currentSubCategoryId}}/{{currentSubCategoryName}}">
                                         <p> {{ tempProduct.name }} </p>                           
                                     </a>
                                 </div>           
