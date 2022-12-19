@@ -45,8 +45,8 @@ export class ProductService {
                 sortString: string): Observable<GetResponseProducts> {
 
     // need to build URL based on keyword
-    const searchUrl = `${this.productUrl}/search/findByNameContaining`
-                      +`?name=${theKeyWord}&page=${thePage}&size=${thePageSize}&sort=${sortString}`;
+    const searchUrl = `${this.productUrl}/search/findByNameContainingAndActive`
+                      +`?name=${theKeyWord}&active=${true}&page=${thePage}&size=${thePageSize}&sort=${sortString}`;
 
     return this.getProducts(searchUrl);
   }
@@ -54,7 +54,7 @@ export class ProductService {
   getProductList(thePage: number, 
                 thePageSize: number,
                 sortString: string): Observable<GetResponseProducts> {
-    const productsUrl = `${this.productUrl}?page=${thePage}&size=${thePageSize}&sort=${sortString}`;
+    const productsUrl = `${this.productUrl}/search/findProductByActive?active=${true}&page=${thePage}&size=${thePageSize}&sort=${sortString}`;
 
     return this.getProducts(productsUrl);
   }
@@ -68,7 +68,7 @@ export class ProductService {
                           sortString: string,
                           id: string): Observable<GetResponseProducts> {
     const productSubCategoryUrl = `${this.productUrl}` +
-    `/search/findProductByProductSubCategoryIdIn?ids=${id}` +
+    `/search/findProductByProductSubCategoryIdInAndActive?ids=${id}&active=${true}` +
     `&page=${thePage}&size=${thePageSize}&sort=${sortString}`;
 
     console.log(productSubCategoryUrl);
@@ -79,7 +79,7 @@ export class ProductService {
                         thePageSize: number,
                         sortString: string,
                         id: number): Observable<GetResponseProducts> {
-    const url = `${this.productUrl}/search/findProductByProductSubCategoryId?id=${id}` +
+    const url = `${this.productUrl}/search/findProductByProductSubCategoryIdAndActive?id=${id}&active=${true}` +
                 `&page=${thePage}&size=${thePageSize}&sort=${sortString}`;
 
     return this.httpClient.get<GetResponseProducts>(url);

@@ -16,6 +16,7 @@ export class CartServiceService {
   numberOfProducts: Subject<number> = new Subject<number>();
 
   sendWholePrice: Subject<number> = new ReplaySubject<number>();
+  sendWholeQuantity: Subject<number> = new ReplaySubject<number>();
   sendShippingCost: Subject<string> = new ReplaySubject<string>();
 
   constructor(private httpClient: HttpClient) {
@@ -94,8 +95,9 @@ export class CartServiceService {
     }
   }
 
-  saveData(wPrice: number, sPrice: string) {
+  saveData(wPrice: number, wQuantity: number, sPrice: string) {
     this.sendWholePrice.next(wPrice);
     this.sendShippingCost.next(sPrice);
+    this.sendWholeQuantity.next(wQuantity);
   }
 }

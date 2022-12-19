@@ -49,16 +49,31 @@ export class CartDetailsComponent implements OnInit {
   }
 
   handleProductsCorrelation() {
-    this.correlationService.getAllProductsAlsoBought().subscribe(
-      data => {
-        var indexes = this.get5ProductsAlsoBought(data);
-        this.correlationService.get5Products(indexes).subscribe(
-          data => {
-            this.productAlsoBought = data;
-          }
-        );
-      }
-    );
+    if(this.cartService.cartProducts.length > 0){
+      var cartProductsId = this.cartService.cartProducts.map(item => item.id);
+      this.correlationService.getProductAlsoBoughtByIdFather(cartProductsId).subscribe(
+        data => {
+          var indexes = this.get5ProductsAlsoBought(data, cartProductsId);
+          this.correlationService.get5Products(indexes).subscribe(
+            data => {
+              this.productAlsoBought = data;
+            }
+          );
+        }
+      );
+    }else {
+      var cartProductsId: number[] = [];
+      this.correlationService.getAllProductsAlsoBought().subscribe(
+        data => {
+          var indexes = this.get5ProductsAlsoBought(data, cartProductsId);
+          this.correlationService.get5Products(indexes).subscribe(
+            data => {
+              this.productAlsoBought = data;
+            }
+          );
+        }
+      );
+    }
 
     if(this.cartService.cartProducts.length > 0) {
       var cartProductsId = this.cartService.cartProducts.map(item => item.id);
@@ -87,13 +102,13 @@ export class CartDetailsComponent implements OnInit {
     }
   }
 
-  get5ProductsAlsoBought(data: ProductAlsoBought[]): string {
+  get5ProductsAlsoBought(data: ProductAlsoBought[], cartProductsId: number[]): string {
     var indexes = new Array<Number>;
     var i : number = 0;
 
     for(var element of data) {
-      if(!indexes.includes(element.idFatherProduct)) {
-        indexes.push(element.idFatherProduct);
+      if(!indexes.includes(element.idProduct) && !cartProductsId.includes(element.idProduct)) {
+        indexes.push(element.idProduct);
         i++;
       }
 
@@ -156,10 +171,10 @@ export class CartDetailsComponent implements OnInit {
   saveData() {
     if(this.discountWholePrice === ""){
       this.cartService
-      .saveData(this.wholePrice, this.shippingPrice);
+      .saveData(this.wholePrice, this.wholeQuantity, this.shippingPrice);
     }else {
       this.cartService
-      .saveData(+this.discountWholePrice, this.shippingPrice);
+      .saveData(+this.discountWholePrice, this.wholeQuantity, this.shippingPrice);
     }
   }
 

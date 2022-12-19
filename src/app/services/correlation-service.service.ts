@@ -42,6 +42,13 @@ export class CorrelationServiceService {
     );
   }
 
+  getProductAlsoBoughtByIdFather(ids: number[]): Observable<ProductAlsoBought[]> {
+    const url = `${this.productAlsoBoughtUrl}/search/findAllByIdFatherProductInOrderByBoughtCountDesc?ids=${ids}`;
+    return this.httpClient.get<GetResponseProductAlsoBought>(url).pipe(
+      map(response => response._embedded.productsAlsoBought)
+    );
+  }
+
   get5Products(numbers: string): Observable<Product[]> {
     const url = `${this.productsUrl}/search/findProductByIdIn?ids=${numbers}`;
     return this.httpClient.get<GetResponseProducts>(url).pipe(

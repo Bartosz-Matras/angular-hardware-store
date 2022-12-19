@@ -1234,23 +1234,11 @@ a:active { text-decoration: none; }
 }
 
 
-/*
-
-.product-also-bought {
-    width: 70vw;
-    height: 20vh;
+.checkout-error {
+    width: 60%;
+    font-size: 0.75em;
 }
 
-.product-details {
-    width: 70vw;
-    height: auto;
-    padding-left: 3%;
-}
-
-.product-also-watched {
-    width: 70vw;
-    height: 20vh;
-}  */
 
 /*
  * ------------------------------

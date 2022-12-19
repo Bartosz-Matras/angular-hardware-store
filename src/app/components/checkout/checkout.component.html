@@ -14,6 +14,15 @@
                         <div class="col-md-9">
                             <div class="checkout-input-space">
                                 <input formControlName="firstName" type="text" >
+                                <div *ngIf="firstName!.invalid && (firstName!.dirty || firstName!.touched)" class="alert alert-danger mt-1 checkout-error">
+                                    <div *ngIf="firstName!.errors?.['required'] || firstName!.errors?.['notOnlyWhitespace']">
+                                        Imie jest wymagane
+                                    </div>
+
+                                    <div *ngIf="firstName!.errors?.['minlength'] && !(firstName!.errors?.['required'] || firstName!.errors?.['notOnlyWhitespace'])">
+                                        Imie musi mieć co najmniej dwie litery
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -25,6 +34,15 @@
                         <div class="col-md-9">
                             <div class="checkout-input-space">
                                 <input formControlName="lastName" type="text" >
+                                <div *ngIf="lastName!.invalid && (lastName!.dirty || lastName!.touched)" class="alert alert-danger mt-1 checkout-error">
+                                    <div *ngIf="lastName!.errors?.['required'] || lastName!.errors?.['notOnlyWhitespace']">
+                                        Nazwisko jest wymagane
+                                    </div>
+
+                                    <div *ngIf="lastName!.errors?.['minlength'] && !(lastName!.errors?.['required'] || lastName!.errors?.['notOnlyWhitespace'])">
+                                        Nazwisko musi mieć co najmniej dwie litery
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -36,6 +54,15 @@
                         <div class="col-md-9">
                             <div class="checkout-input-space">
                                 <input formControlName="email" type="email" >
+                                <div *ngIf="email!.invalid && (email!.dirty || email!.touched)" class="alert alert-danger mt-1 checkout-error">
+                                    <div *ngIf="email!.errors?.['required']">
+                                        Email jest wymagany
+                                    </div>
+
+                                    <div *ngIf="email!.errors?.['pattern']">
+                                        Email musi mieć poprawny format
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -52,6 +79,16 @@
                         <div class="col-md-9">
                             <div class="checkout-input-space">
                                 <input formControlName="street" type="text" >
+
+                                <div *ngIf="shippingAddressStreet!.invalid && (shippingAddressStreet!.dirty || shippingAddressStreet!.touched)" class="alert alert-danger mt-1 checkout-error">
+                                    <div *ngIf="shippingAddressStreet!.errors?.['required'] || shippingAddressStreet!.errors?.['notOnlyWhitespace']">
+                                        Ulica jest wymagana
+                                    </div>
+
+                                    <div *ngIf="shippingAddressStreet!.errors?.['minlength'] && !(shippingAddressStreet!.errors?.['required'] || shippingAddressStreet!.errors?.['notOnlyWhitespace'])">
+                                        Ulica musi mieć co najmniej dwie litery
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -63,6 +100,15 @@
                         <div class="col-md-9">
                             <div class="checkout-input-space">
                                 <input formControlName="city" type="text" >
+                                <div *ngIf="shippingAddressCity!.invalid && (shippingAddressCity!.dirty || shippingAddressCity!.touched)" class="alert alert-danger mt-1 checkout-error">
+                                    <div *ngIf="shippingAddressCity!.errors?.['required'] || shippingAddressCity!.errors?.['notOnlyWhitespace']">
+                                        Miasto jest wymagane
+                                    </div>
+
+                                    <div *ngIf="shippingAddressCity!.errors?.['minlength'] && !(shippingAddressCity!.errors?.['required'] || shippingAddressCity!.errors?.['notOnlyWhitespace'])">
+                                        Miasto musi mieć co najmniej dwie litery
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -74,6 +120,16 @@
                         <div class="col-md-9">
                             <div class="checkout-input-space">
                                 <input formControlName="zipCode" type="text" >
+
+                                <div *ngIf="shippingAddressZipCode!.invalid && (shippingAddressZipCode!.dirty || shippingAddressZipCode!.touched)" class="alert alert-danger mt-1 checkout-error">
+                                    <div *ngIf="shippingAddressZipCode!.errors?.['required'] || shippingAddressZipCode!.errors?.['notOnlyWhitespace']">
+                                        Kod pocztowy jest wymagany
+                                    </div>
+
+                                    <div *ngIf="shippingAddressZipCode!.errors?.['minlength'] && !(shippingAddressZipCode!.errors?.['required'] || shippingAddressZipCode!.errors?.['notOnlyWhitespace'])">
+                                        Kod pocztowy musi mieć co najmniej dwie litery
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -84,22 +140,38 @@
                         </div>
                         <div class="col-md-9">
                             <div class="checkout-input-space">
-                                <select formControlName="state">
-                                    <option>TO DO</option>
+                                <select formControlName="state" >
+                                    <option *ngFor="let state of shippingAddressStates" [ngValue]="state">
+                                        {{ state.name }}
+                                    </option>
                                 </select>
+
+                                <div *ngIf="shippingAddressState!.invalid && (shippingAddressState!.dirty || shippingAddressState!.touched)" class="alert alert-danger mt-1 checkout-error">
+                                    <div *ngIf="shippingAddressState!.errors?.['required']">
+                                        Województwo jest wymagane
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-3">
-                            <label>Państwo:</label>
+                            <label>Kraj:</label>
                         </div>
                         <div class="col-md-9">
                             <div class="checkout-input-space">
-                                <select formControlName="country">
-                                    <option>TO DO</option>
+                                <select formControlName="country" (change)="getStates('shippingAddress')">
+                                    <option *ngFor="let country of countries" [ngValue]="country">
+                                        {{ country.name }}
+                                    </option>
                                 </select>
+
+                                <div *ngIf="shippingAddressCountry!.invalid && (shippingAddressCountry!.dirty || shippingAddressCountry!.touched)" class="alert alert-danger mt-1 checkout-error">
+                                    <div *ngIf="shippingAddressCountry!.errors?.['required']">
+                                        Kraj jest wymagany
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -122,6 +194,15 @@
                         <div class="col-md-9">
                             <div class="checkout-input-space">
                                 <input formControlName="street" type="text" >
+                                <div *ngIf="billingAddressStreet!.invalid && (billingAddressStreet!.dirty || billingAddressStreet!.touched)" class="alert alert-danger mt-1 checkout-error">
+                                    <div *ngIf="billingAddressStreet!.errors?.['required'] || billingAddressStreet!.errors?.['notOnlyWhitespace']">
+                                        Ulica jest wymagana
+                                    </div>
+
+                                    <div *ngIf="billingAddressStreet!.errors?.['minlength'] && !(billingAddressStreet!.errors?.['required'] || billingAddressStreet!.errors?.['notOnlyWhitespace'])">
+                                        Ulica musi mieć co najmniej dwie litery
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -133,6 +214,15 @@
                         <div class="col-md-9">
                             <div class="checkout-input-space">
                                 <input formControlName="city" type="text" >
+                                <div *ngIf="billingAddressCity!.invalid && (billingAddressCity!.dirty || billingAddressCity!.touched)" class="alert alert-danger mt-1 checkout-error">
+                                    <div *ngIf="billingAddressCity!.errors?.['required'] || billingAddressCity!.errors?.['notOnlyWhitespace']">
+                                        Miasto jest wymagane
+                                    </div>
+
+                                    <div *ngIf="billingAddressCity!.errors?.['minlength'] && !(billingAddressCity!.errors?.['required'] || billingAddressCity!.errors?.['notOnlyWhitespace'])">
+                                        Miasto musi mieć co najmniej dwie litery
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -144,6 +234,15 @@
                         <div class="col-md-9">
                             <div class="checkout-input-space">
                                 <input formControlName="zipCode" type="text" >
+                                <div *ngIf="billingAddressZipCode!.invalid && (billingAddressZipCode!.dirty || billingAddressZipCode!.touched)" class="alert alert-danger mt-1 checkout-error">
+                                    <div *ngIf="billingAddressZipCode!.errors?.['required'] || billingAddressZipCode!.errors?.['notOnlyWhitespace']">
+                                        Kod pocztowy jest wymagany
+                                    </div>
+
+                                    <div *ngIf="billingAddressZipCode!.errors?.['minlength'] && !(billingAddressZipCode!.errors?.['required'] || billingAddressZipCode!.errors?.['notOnlyWhitespace'])">
+                                        Kod pocztowy musi mieć co najmniej dwie litery
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -155,21 +254,35 @@
                         <div class="col-md-9">
                             <div class="checkout-input-space">
                                 <select formControlName="state">
-                                    <option>TO DO</option>
+                                    <option *ngFor="let state of billingAddressStates" [ngValue]="state">
+                                        {{ state.name }}
+                                    </option>
                                 </select>
+                                <div *ngIf="billingAddressState!.invalid && (billingAddressState!.dirty || billingAddressState!.touched)" class="alert alert-danger mt-1 checkout-error">
+                                    <div *ngIf="billingAddressState!.errors?.['required']">
+                                        Województwo jest wymagane
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-3">
-                            <label>Państwo:</label>
+                            <label>Kraj:</label>
                         </div>
                         <div class="col-md-9">
                             <div class="checkout-input-space">
-                                <select formControlName="country">
-                                    <option>TO DO</option>
-                                </select>                            
+                                <select formControlName="country" (change)="getStates('billingAddress')">
+                                    <option *ngFor="let country of countries" [ngValue]="country">
+                                        {{ country.name }}
+                                    </option>
+                                </select>    
+                                <div *ngIf="billingAddressCountry!.invalid && (billingAddressCountry!.dirty || billingAddressCountry!.touched)" class="alert alert-danger mt-1 checkout-error">
+                                    <div *ngIf="billingAddressCountry!.errors?.['required']">
+                                        Kraj jest wymagany
+                                    </div>
+                                </div>                        
                             </div>
                         </div>
                     </div>
@@ -177,7 +290,7 @@
 
 
 
-                <div formGroupName="creaditCard" class="checkout-form">
+                <div formGroupName="creditCard" class="checkout-form">
                     <h3>Dane karty kredytowej:</h3>
                     <div class="row">
                         <div class="col-md-3">
@@ -188,18 +301,32 @@
                                 <select formControlName="cardType">
                                     <option>Visa</option>
                                     <option>Mastercard</option>
-                                </select>                             
+                                </select>         
+                                <div *ngIf="creditCardType!.invalid && (creditCardType!.dirty || creditCardType!.touched)" class="alert alert-danger mt-1 checkout-error">
+                                    <div *ngIf="creditCardType!.errors?.['required']">
+                                        Typ karty jest wymagany
+                                    </div>
+                                </div>                   
                             </div>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-3">
-                            <label>Nazwa karty:</label>
+                            <label>Nazwa banku:</label>
                         </div>
                         <div class="col-md-9">
                             <div class="checkout-input-space">
                                 <input formControlName="nameOnCard" type="text" >
+                                <div *ngIf="creditCardNameOnCard!.invalid && (creditCardNameOnCard!.dirty || creditCardNameOnCard!.touched)" class="alert alert-danger mt-1 checkout-error">
+                                    <div *ngIf="creditCardNameOnCard!.errors?.['required'] || creditCardNameOnCard!.errors?.['notOnlyWhitespace']">
+                                        Nazwa banku jest wymagana
+                                    </div>
+
+                                    <div *ngIf="creditCardNameOnCard!.errors?.['minlength'] && !(creditCardNameOnCard!.errors?.['required'] || creditCardNameOnCard!.errors?.['notOnlyWhitespace'])">
+                                        Nazwa banku musi mieć co najmniej dwie litery
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -211,6 +338,15 @@
                         <div class="col-md-9">
                             <div class="checkout-input-space">
                                 <input formControlName="cardNumber" type="text" >
+                                <div *ngIf="creditCardNumber!.invalid && (creditCardNumber!.dirty || creditCardNumber!.touched)" class="alert alert-danger mt-1 checkout-error">
+                                    <div *ngIf="creditCardNumber!.errors?.['required']">
+                                        Numer karty jest wymagany
+                                    </div>
+
+                                    <div *ngIf="creditCardNumber!.errors?.['pattern']">
+                                        Numer karty musi mieć poprawny format
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -222,6 +358,15 @@
                         <div class="col-md-9">
                             <div class="checkout-input-space">
                                 <input formControlName="securityCode" type="text" >
+                                <div *ngIf="creditCardSecurityCode!.invalid && (creditCardSecurityCode!.dirty || creditCardSecurityCode!.touched)" class="alert alert-danger mt-1 checkout-error">
+                                    <div *ngIf="creditCardSecurityCode!.errors?.['required']">
+                                        Kod bezpieczeństwa jest wymagany
+                                    </div>
+
+                                    <div *ngIf="creditCardSecurityCode!.errors?.['pattern']">
+                                        Kod bezpieczeństwa musi mieć poprawny format
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -247,7 +392,7 @@
                         </div>
                         <div class="col-md-9">
                             <div class="checkout-input-space">
-                                <select formControlName="expirationYear">
+                                <select formControlName="expirationYear" (change)="handleMonthsAndYears()">
                                     <option *ngFor="let year of creditCardYears">
                                         {{ year }}
                                     </option>

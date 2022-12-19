@@ -60,9 +60,6 @@ export class ProductDetailsComponent implements OnInit {
       this.productSubCategoryName = this.route.snapshot.paramMap.get('nameS')!;  
     }
 
-    console.log(this.productCategoryId + " = " + this.productCategoryName + " = "  + 
-        this.productSubCategoryId + " = " + this.productSubCategoryName)
-
     this.listProductCategories();
 
     this.route.paramMap.subscribe(() => {
@@ -119,16 +116,31 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   handleProductsCorrelation() {
-    this.correlationService.getAllProductsAlsoBought().subscribe(
-      data => {
-        var indexes = this.get5ProductsAlsoBought(data);
-        this.correlationService.get5Products(indexes).subscribe(
-          data => {
-            this.productAlsoBought = data;
-          }
-        );
-      }
-    );
+    if(this.cartService.cartProducts.length > 0){
+      var cartProductsId = this.cartService.cartProducts.map(item => item.id);
+      this.correlationService.getProductAlsoBoughtByIdFather(cartProductsId).subscribe(
+        data => {
+          var indexes = this.get5ProductsAlsoBought(data);
+          this.correlationService.get5Products(indexes).subscribe(
+            data => {
+              this.productAlsoBought = data;
+            }
+          );
+        }
+      );
+    }else {
+      this.correlationService.getAllProductsAlsoBought().subscribe(
+        data => {
+          var indexes = this.get5ProductsAlsoBought(data);
+          this.correlationService.get5Products(indexes).subscribe(
+            data => {
+              this.productAlsoBought = data;
+            }
+          );
+        }
+      );
+    }
+    
 
     if(this.cartService.cartProducts.length > 0) {
       var cartProductsId = this.cartService.cartProducts.map(item => item.id);
@@ -162,8 +174,8 @@ export class ProductDetailsComponent implements OnInit {
     var i : number = 0;
 
     for(var element of data) {
-      if(!indexes.includes(element.idFatherProduct)) {
-        indexes.push(element.idFatherProduct);
+      if(!indexes.includes(element.idProduct)  && this.product?.id != element.idProduct) {
+        indexes.push(element.idProduct);
         i++;
       }
 
