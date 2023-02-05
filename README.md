@@ -22,43 +22,43 @@ Aplikacja jest stworzona dla osób które chcą zakupić narzędzia i elektronar
 
 ## Zrzuty ekranu
 1. Strona główna -  góra
-![image](https://user-images.githubusercontent.com/72404101/216826225-d81309ca-377e-4fec-a2b7-5bf47c01400e.png)
+![image](https://user-images.githubusercontent.com/72404101/216826388-872252ef-0b32-4b2b-a551-14e9a1407cef.png)
 
 2. Strona główna - dół
-![image](https://user-images.githubusercontent.com/72404101/216826239-5338208e-ccdc-4f10-95c2-1e1dc17c38d4.png)
+![image](https://user-images.githubusercontent.com/72404101/216826396-020c6730-57fc-48e9-aea6-20d0a094d28d.png)
 
 3. Wybranie kategorii
-![image](https://user-images.githubusercontent.com/72404101/216826245-008b0f4d-5d01-421e-ad34-034a98730ffd.png)
+![image](https://user-images.githubusercontent.com/72404101/216826401-db1117b6-33ee-4c01-9c06-ec02a53fcf59.png)
 
 4. Wybranie podkategorii
-![image](https://user-images.githubusercontent.com/72404101/216826255-c01ff4b8-ac08-4167-96d5-4c7c4de35d36.png)
+![image](https://user-images.githubusercontent.com/72404101/216826407-43677572-2398-4b99-a29c-d590de3f6a7d.png)
 
 5. Szczegóły produktu - góra
-![image](https://user-images.githubusercontent.com/72404101/216826273-36c75297-83ef-45f2-ab95-17709cc06c91.png)
+![image](https://user-images.githubusercontent.com/72404101/216826414-89e6a008-68c8-4aa7-9422-bf27c31a961e.png)
 
 6. Szczegóły produktu - środek
-![image](https://user-images.githubusercontent.com/72404101/216826282-6b447986-e9ca-4aa6-9842-31501cde76d2.png)
+![image](https://user-images.githubusercontent.com/72404101/216826419-89f14e31-1d0b-4e2b-bff9-8f1cb4fe37b1.png)
 
 7. Szczegóły produktu – dół
-![image](https://user-images.githubusercontent.com/72404101/216826289-16ce3e28-8c8e-4955-bf5e-83463fa5f533.png)
+![image](https://user-images.githubusercontent.com/72404101/216826422-f7b4d22c-536a-435b-b752-df2d6e2244ab.png)
 
 8. Wyszukiwanie po nazwie
-![image](https://user-images.githubusercontent.com/72404101/216826294-d383423d-10ee-4522-902e-475891a1e683.png)
+![image](https://user-images.githubusercontent.com/72404101/216826429-e700bb67-ff6a-4b13-9187-18cb7613bd6b.png)
 
 9. Koszyk – góra
-![image](https://user-images.githubusercontent.com/72404101/216826300-70fb5490-481a-4853-9f8f-7832afce45dd.png)
+![image](https://user-images.githubusercontent.com/72404101/216826434-864cee1a-560e-4b61-b331-a321cc474f44.png)
 
 10. Koszyk – środek
-![image](https://user-images.githubusercontent.com/72404101/216826308-e5737c9c-e1c1-428b-9c8d-65b6a40f1eea.png)
+![image](https://user-images.githubusercontent.com/72404101/216826441-bfa43217-1e49-41e8-a4fe-ad35a9764922.png)
 
 11. Koszyk – środek 2
-![image](https://user-images.githubusercontent.com/72404101/216826311-c3e097a1-16e5-4be0-98e9-408ee4cf2918.png)
+![image](https://user-images.githubusercontent.com/72404101/216826446-011eb56a-9817-4c19-9cd3-e7f895534990.png)
 
 12. Koszyk – dół
-![image](https://user-images.githubusercontent.com/72404101/216826317-7a7034ca-f64c-4f7d-a165-77e8dbf50a5d.png)
+![image](https://user-images.githubusercontent.com/72404101/216826453-e0c67410-e6ec-441d-b8f4-798ac74ed78c.png)
 
 13. Pusty koszyk
-![image](https://user-images.githubusercontent.com/72404101/216826323-a595d758-5c86-47cf-b65d-dbb47d7ecc96.png)
+![image](https://user-images.githubusercontent.com/72404101/216826457-2776016d-0143-42ce-b4bf-4920205af161.png)
 
 15. Formularz:
 Dane zamawiającego
